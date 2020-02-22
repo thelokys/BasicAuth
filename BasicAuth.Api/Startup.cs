@@ -6,7 +6,6 @@ namespace BasicAuth.Api
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
-    using MongoDB.Bson.Serialization.Conventions;
 
     public class Startup
     {

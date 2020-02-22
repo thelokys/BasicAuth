@@ -1,6 +1,5 @@
 namespace BasicAuth.Api.Utils
 {
-    using System;
     using BasicAuth.Api.Configs;
     using BasicAuth.Api.Models;
     using Microsoft.Extensions.Configuration;
