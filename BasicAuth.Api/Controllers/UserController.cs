@@ -26,7 +26,7 @@ namespace BasicAuth.Api.Controllers
             );
         }
 
-        [HttpGet("{id}", Name = "show")]
+        [HttpGet("{id}", Name = "showUser")]
         public async Task<IActionResult> Show(string id)
         {
             var userFound = await this.Users
@@ -44,9 +44,9 @@ namespace BasicAuth.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Store(User newUser)
         {
-            var userFound = this.Users.Find<User>(
-                user => user.Email == newUser.Email
-            ).FirstOrDefault();
+            var userFound = this.Users
+                .Find<User>(user => user.Email == newUser.Email)
+                .FirstOrDefault();
 
             if (userFound != null)
             {
@@ -54,14 +54,15 @@ namespace BasicAuth.Api.Controllers
             }
 
             await this.Users.InsertOneAsync(newUser);
-            return CreatedAtRoute("show",
+            return CreatedAtRoute("showUser",
                 new { id = newUser.Id.ToString() },
                 newUser
             );
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(string id, UserViewModel update)
+        public async Task<IActionResult> Update(string id,
+            UpdateUserViewModel model)
         {
             var userFound = await this.Users
                 .Find<User>(user => user.Id == id)
@@ -72,10 +73,10 @@ namespace BasicAuth.Api.Controllers
                 return NotFound(id);
             }
 
-            update.CopyProperties(userFound);
+            var updated = model.ParseToUser(userFound);
 
             await this.Users
-                .ReplaceOneAsync(x => x.Id == id, userFound);
+                .ReplaceOneAsync(x => x.Id == id, updated);
 
             return NoContent();
         }
