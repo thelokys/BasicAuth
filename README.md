@@ -2,13 +2,6 @@
 
 Playground
 
-## Todos
-
-- [ ] Change type of field's password
-- [ ] Add JWT
-- [ ] Create an end-point with a simple requirements to login
-- [ ] Roles's System
-
 ## Installation
 
 ```shell
